@@ -64,20 +64,57 @@ input[type=date],select{padding:10px;border-radius:12px;border:1px solid #d8cdea
 input[type=file]{display:none}
 .note{font-size:13px;color:var(--mut)}
 .warn{font-size:12.5px;color:#b45309;background:#fdf3e3;border-radius:10px;padding:9px 12px;margin-top:10px}
+
+.scanbox .btn{margin-top:8px}
+#scanv{width:100%;height:230px;object-fit:cover;border-radius:14px;background:#000}
+.ovl{position:fixed;inset:0;background:rgba(35,12,55,.5);display:none;z-index:60;align-items:flex-end}
+.ovl.on{display:flex}
+.sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:18px;max-height:85vh;overflow:auto;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 10px}
+.sheet input{width:100%;padding:11px;border-radius:12px;border:1px solid #d8cdea;font-size:15px;margin-bottom:10px}
+.sheet label{font-size:13px;color:var(--mut);display:block;margin-bottom:4px}
+.rowbtns{display:flex;gap:8px}
+.rowbtns .btn{margin-top:6px}
+.addbtn{border:2px dashed #d8cdea;border-radius:12px;padding:11px;text-align:center;color:var(--violet);font-weight:800;margin-top:10px}
+.delx{color:#c0392b;font-size:15px;padding:6px 8px}
+.tchip{background:#f1e8fb;color:var(--violet);font-weight:800;font-size:12px;padding:4px 10px;border-radius:20px;flex:none}
+.vithead{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.vithead .ic{font-size:22px}
+.vithead .st{margin-left:auto;font-size:12px;color:var(--amber);font-weight:700}
+.vithead .edit{color:var(--mut);font-size:16px;padding:4px 6px}
+.tdot{display:none;width:8px;height:8px;border-radius:50%;background:#e11d48;margin-left:3px}
+.tdot.on{display:inline-block}
+.vitbanner{border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700;margin-bottom:12px}
+.vitbanner.due{background:#fdf0d6;color:#92400e}
+.vitbanner.ok{background:#e4f6ec;color:#1f7a4d}
+.grambtns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.gbtn{padding:9px 14px;border-radius:20px;border:1.5px solid var(--violet);color:var(--violet);font-weight:700;font-size:14px;background:#fff}
+.gbtn.on{background:var(--violet);color:#fff}
+.scanres{border:1px solid #e6def2;border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
+.scanres b{font-size:14.5px}
+.scanres .kcal{color:var(--mut);font-size:13px}
+.prodname{font-size:15px;font-weight:700;margin:6px 0 2px}
+.prodsub{font-size:13px;color:var(--mut)}
+.spin{font-size:14px;color:var(--mut);padding:14px 0;text-align:center}
 </style>
 </head>
 <body>
-<header><h1>🧘 ЗенТарелка</h1><p>йога · питание · дневник прогресса</p></header>
+<header><h1>🧘 ЗенТарелка</h1><p>йога · питание · витамины · дневник прогресса</p></header>
 <div class="tabs">
 <div class="tab on" data-s="food">🍽 Питание</div>
 <div class="tab" data-s="yoga">🧘 Йога</div>
 <div class="tab" data-s="rec">📖 Рецепты</div>
-<div class="tab" data-s="diary">📋 Дневник</div>
+<div class="tab" data-s="vit">💊 Витамины<span class="tdot" id="vitdot"></span></div><div class="tab" data-s="diary">📋 Дневник</div>
 </div>
 <main>
 <div class="section on" id="sec-food">
 <h2>Меню на неделю</h2>
 <p class="note" style="margin-top:-6px">~1100–1400 ккал в день. Ставьте галочки по мере приёмов пищи — дневник посчитает калории сам.</p>
+<div class="card scanbox">
+<b>📷 Сканер продуктов</b>
+<p class="note" style="margin:6px 0 0">Наведите камеру на штрихкод — приложение найдёт продукт в открытой базе Open Food Facts (нужен интернет) и добавит в день с готовыми калориями. Нет штрихкода — поиск по названию.</p>
+<div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="openScan()">📷 Сканер штрихкода</button><button class="btn bsec" style="flex:1" onclick="openSearch()">🔎 Поиск по названию</button></div>
+</div>
 <div id="menulist"></div>
 </div>
 
@@ -91,6 +128,27 @@ input[type=file]{display:none}
 <h2>Рецепты</h2>
 <div class="filterbar" id="fbar"></div>
 <div id="reclist"></div>
+</div>
+
+
+<div class="section" id="sec-vit">
+<h2>💊 Витамины</h2>
+<div id="vitBanner"></div>
+<div class="card" id="vitToday"></div>
+<div class="card">
+<button class="btn bprim" onclick="vitNotif()">🔔 Включить напоминания</button>
+<p class="note" id="vitPerm" style="margin-top:8px"></p>
+<div class="warn">Честно про уведомления: пока «ЗенТарелка» открыта — напоминание придёт. А вот будить закрытое приложение iOS для веб-страниц не разрешает. Для будильников продублируйте приёмы один раз в «Здоровье» → «Приём лекарств» или «Напоминания» — тогда телефон напомнит сам.</div>
+</div>
+<div id="vitList"></div>
+<div class="card">
+<b>Как это устроено</b>
+<ul class="note" style="padding-left:18px;margin:8px 0 0">
+<li>Время и дозы — типовые по инструкциям. Сверьте с вашими упаковками и поправьте кнопкой ✎ на карточке.</li>
+<li>Отмечайте после приёма — у каждого свой счётчик серии 🔥.</li>
+<li>Отметки попадают в бэкап автоматически.</li>
+</ul>
+</div>
 </div>
 
 <div class="section" id="sec-diary">
@@ -107,7 +165,7 @@ input[type=file]{display:none}
 <div id="dMeals"></div>
 <div class="daykcal" id="dKcal"></div>
 <h3 style="margin:12px 0 6px;font-size:16px">Практики</h3>
-<div id="dPrac"></div>
+<div id="dPrac"></div><div id="dVit" style="margin-top:10px"></div>
 </div>
 <div class="backupbox">
 <h3>💾 Бэкап данных</h3>
@@ -119,6 +177,7 @@ input[type=file]{display:none}
 </div>
 </div>
 </main>
+<div class="ovl" id="ovl"><div class="sheet" id="sheet"></div></div>
 <script>
 const MENU = [{"d": "Пн", "name": "Понедельник", "items": [["Завтрак", "Овсянка с яблоком и корицей", 280], ["Обед", "Гречка с куриной грудкой и овощным салатом", 420], ["Ужин", "Томатный суп с фрикадельками из индейки", 350], ["Перекус", "Йогурт без сахара с орехами", 150]]}, {"d": "Вт", "name": "Вторник", "items": [["Завтрак", "Омлет с овощами", 250], ["Обед", "Рис с индейкой и тушёными овощами", 450], ["Ужин", "Кабачки, запечённые с фаршем индейки", 380], ["Перекус", "Творог с ягодами", 120]]}, {"d": "Ср", "name": "Среда", "items": [["Завтрак", "Творог с фруктами и мёдом", 250], ["Обед", "Куриный суп с рисом и овощами", 340], ["Ужин", "Куриный суп с рисом и овощами (сварите на 2 дня)", 340], ["Перекус", "Яблоко и горсть миндаля", 150]]}, {"d": "Чт", "name": "Четверг", "items": [["Завтрак", "Рисовая каша с изюмом", 280], ["Обед", "Картофель с куриной грудкой и огурцом", 450], ["Ужин", "Хек в духовке с помидорами", 350], ["Перекус", "Йогурт без сахара", 100]]}, {"d": "Пт", "name": "Пятница", "items": [["Завтрак", "Овсяноблин с творогом", 300], ["Обед", "Гречневый суп с курицей", 380], ["Ужин", "Помидоры с фаршем и сыром", 360], ["Перекус", "Кефир 1%", 100]]}, {"d": "Сб", "name": "Суббота", "items": [["Завтрак", "Сырники в духовке с йогуртом", 300], ["Обед", "Плов с курицей", 480], ["Ужин", "Курица с овощами в фольге", 370], ["Перекус", "Банан", 100]]}, {"d": "Вс", "name": "Воскресенье", "items": [["Завтрак", "Омлет с помидорами", 260], ["Обед", "Овощной суп с фрикадельками", 350], ["Ужин", "Минтай с кабачками и морковью в фольге", 330], ["Перекус", "Орехи и сухофрукты", 160]]}];
 const RECIPES = [{"t": "Овсянка с яблоком и корицей", "c": "Завтраки", "kcal": 280, "ing": "Овсянка 50 г, яблоко 1 шт., молоко или вода 200 мл, корица", "steps": ["Овсянку залить горячим молоком или водой, варить 5 минут на тихом огне.", "Яблоко натереть или нарезать кубиком, добавить в кашу.", "Довести до вкуса корицей, дать настояться 2 минуты под крышкой."]}, {"t": "Омлет с овощами", "c": "Завтраки", "kcal": 250, "ing": "2 яйца, молоко 50 мл, помидор, болгарский перец, зелень", "steps": ["Овощи нарезать и слегка припустить на антипригарной сковороде 2 минуты.", "Взбить яйца с молоком, влить к овощам.", "Накрыть крышкой, готовить на малом огне 5–7 минут."]}, {"t": "Творог с фруктами", "c": "Завтраки", "kcal": 250, "ing": "Творог 5% 150 г, банан или яблоко, чайная ложка мёда", "steps": ["Творог размять вилкой до гладкости.", "Фрукты нарезать, смешать с творогом.", "Полить мёдом перед подачей."]}, {"t": "Овсяноблин с творогом", "c": "Завтраки", "kcal": 300, "ing": "Овсяные хлопья 30 г, 1 яйцо, молоко 50 мл, творог 50 г", "steps": ["Хлопья измельчить, смешать с яйцом и молоком, дать постоять 5 минут.", "Вылить на сухую антипригарную сковороду, жарить по 2 минуты с каждой стороны.", "Свернуть с творогом внутри, при желании добавить зелень."]}, {"t": "Сырники в духовке", "c": "Завтраки", "kcal": 300, "ing": "Творог 200 г, 1 яйцо, овсяная мука 2 ст. л., йогурт для подачи", "steps": ["Смешать творог, яйцо и муку до плотной массы.", "Сформировать сырники, выложить на пергамент.", "Запекать 20 минут при 180°C, подавать с йогуртом."]}, {"t": "Рисовая каша с изюмом", "c": "Завтраки", "kcal": 280, "ing": "Рис 60 г, молоко 200 мл, изюм 20 г", "steps": ["Рис отварить в молоке на малом огне 15 минут.", "Промытый изюм добавить за 5 минут до конца.", "Дать настояться под крышкой."]}, {"t": "Гречка с куриной грудкой", "c": "Обеды", "kcal": 420, "ing": "Гречка 70 г, куриная грудка 150 г, огурец, помидор, ложка оливкового масла", "steps": ["Гречку отварить до готовности (12–15 минут).", "Грудку нарезать и обжарить с каплей масла до готовности, посолить.", "Овощи нарезать в салат, всё собрать в тарелку."]}, {"t": "Рис с индейкой и овощами", "c": "Обеды", "kcal": 450, "ing": "Рис 70 г, филе индейки 150 г, кабачок, морковь, лук", "steps": ["Рис отварить. Индейку нарезать кубиком.", "Обжарить лук и морковь, добавить индейку, готовить 7 минут.", "Добавить кабачок, тушить 10 минут, соединить с рисом."]}, {"t": "Картофель с куриной грудкой", "c": "Обеды", "kcal": 450, "ing": "Картофель 250 г, куриная грудка 150 г, огурец свежий", "steps": ["Картофель отварить или запечь в мундире.", "Грудку обжарить с каплей масла до румяности.", "Подать с огурцом."]}, {"t": "Плов с курицей", "c": "Обеды", "kcal": 480, "ing": "Рис 80 г, куриное филе 150 г, морковь, лук, специи для плова", "steps": ["Обжарить лук и морковь, добавить курицу кубиком.", "Всыпать рис, залить водой на 1,5 см выше риса.", "Тушить под крышкой 20 минут на малом огне, не мешать."]}, {"t": "Гречневый суп с курицей", "c": "Обеды", "kcal": 380, "ing": "Гречка 50 г, куриное филе 150 г, картофель, морковь, лук", "steps": ["Отварить курицу, вынуть, нарезать.", "В бульон добавить картофель и гречку, варить 15 минут.", "Вернуть курицу с пассерованными овощами, проварить 5 минут."]}, {"t": "Овощной суп с фрикадельками", "c": "Обеды", "kcal": 350, "ing": "Фарш индейки 200 г, картофель, морковь, лук, зелень, бульон", "steps": ["Скатать фрикадельки, опустить в кипящий бульон.", "Через 10 минут добавить картофель.", "Пассерованные лук и морковь, варить ещё 10 минут, посыпать зеленью."]}, {"t": "Томатный суп с фрикадельками", "c": "Ужины", "kcal": 350, "ing": "Фарш индейки 200 г, томаты в собственном соку 200 г, лук, морковь, бульон 700 мл", "steps": ["Из фарша скатать маленькие фрикадельки.", "В кипящий бульон опустить фрикадельки, варить 10 минут.", "Добавить пассерованные лук и морковь, томаты, соль, варить ещё 10 минут."]}, {"t": "Куриный суп с рисом", "c": "Ужины", "kcal": 340, "ing": "Куриное филе 200 г, рис 40 г, картофель 2 шт., морковь, лук", "steps": ["Отварить филе 20 минут, вынуть и нарезать.", "В бульон добавить картофель и рис, варить 12 минут.", "Вернуть курицу, добавить пассерованные овощи, проварить 5 минут."]}, {"t": "Кабачки с фаршем индейки", "c": "Ужины", "kcal": 380, "ing": "Кабачки 2 шт., фарш индейки 250 г, сметана 2 ст. л., сыр 30 г", "steps": ["Кабачки разрезать вдоль, ложкой вынуть серединку.", "Смешать фарш с мякотью кабачка, посолить, наполнить половинки.", "Полить сметаной, посыпать сыром, запекать 30 минут при 180°C."]}, {"t": "Хек в духовке с помидорами", "c": "Ужины", "kcal": 350, "ing": "Хек 2 тушки, помидоры 2 шт., лимон, лук, специи для рыбы", "steps": ["Рыбу сбрызнуть лимоном, посолить, дать полежать 10 минут.", "Выложить на противень с кольцами лука и кружками помидоров.", "Запекать 25 минут при 180°C."]}, {"t": "Помидоры с фаршем и сыром", "c": "Ужины", "kcal": 360, "ing": "Крупные помидоры 4 шт., фарш индейки 250 г, сыр 40 г, чеснок", "steps": ["Срезать крышечки, аккуратно вынуть мякоть.", "Смешать фарш с мякотью и чесноком, наполнить помидоры.", "Посыпать сыром, запекать 25 минут при 180°C."]}, {"t": "Курица с овощами в фольге", "c": "Ужины", "kcal": 370, "ing": "Куриное бедро без кожи 200 г, кабачок, перец, морковь, специи", "steps": ["Овощи крупно нарезать, выложить на лист фольги.", "Сверху положить курицу, посолить, добавить специи.", "Завернуть конвертом, запекать 35 минут при 190°C."]}, {"t": "Минтай с кабачками в фольге", "c": "Ужины", "kcal": 330, "ing": "Минтай 2 тушки, кабачок, морковь, лимон", "steps": ["Рыбу посолить, сбрызнуть лимоном.", "Выложить на фольгу с кружками кабачка и моркови.", "Завернуть и запекать 25 минут при 190°C."]}, {"t": "Йогурт с орехами", "c": "Перекусы", "kcal": 150, "ing": "Йогурт без сахара 150 г, грецкие орехи 15 г", "steps": ["Орехи порубить.", "Смешать с йогуртом перед подачей."]}, {"t": "Творог с ягодами", "c": "Перекусы", "kcal": 120, "ing": "Творог 100 г, горсть ягод", "steps": ["Ягоды промыть, смешать с творогом.", "При желании — капля мёда."]}, {"t": "Кефир", "c": "Перекусы", "kcal": 100, "ing": "Кефир 1% — стакан 250 мл", "steps": ["Просто выпить стакан кефира. Отличный вечерний перекус."]}];
@@ -126,7 +185,7 @@ const PRACTICES = [{"id": "power_mon", "t": "Силовая йога: интен
 const SCHED = {"0": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "1": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "2": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "3": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "4": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "5": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "6": ["Виньяса 40 мин", "Спина 15 мин", "Вечерняя растяжка"]};
 const DOW = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
-let S = JSON.parse(localStorage.getItem('zt')||'null')||{start:null,food:{},prac:{},lastbk:null};
+let S = JSON.parse(localStorage.getItem('zt')||'null')||{start:null,food:{},prac:{},custom:{},vit:{},vitcfg:{},lastbk:null};
 
 function sv(){localStorage.setItem('zt',JSON.stringify(S));}
 function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -135,12 +194,16 @@ function keyOf(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(
 function renderMenu(){
  let h='';
  MENU.forEach((day,di)=>{
-  let tot=day.items.reduce((a,x)=>a+x[2],0);
+  let tot=day.items.reduce((a,x)=>a+x[2],0)+((S.custom[day.d]||[]).reduce((a,x)=>a+(+x.k||0),0));
   h+='<div class="card"><b>'+day.name+'</b> <span class="note">· '+tot+' ккал</span>';
   day.items.forEach((it,ii)=>{
    const k=day.d+'_'+ii,on=!!S.food[k];
    h+='<div class="mealrow"><div class="info"><b>'+it[1]+'</b><span class="tag">'+it[0]+' · '+it[2]+' ккал</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div></div>';
   });
+  (S.custom[day.d]||[]).forEach(c=>{const k='c_'+c.id,on=!!S.food[k];
+   h+='<div class="mealrow"><div class="info"><b>'+esc(c.n)+'</b><span class="tag">моё · '+c.k+' ккал'+(c.g?' · '+c.g:'')+'</span></div><div style="display:flex;gap:8px;align-items:center"><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div><span class="delx" onclick="delCustom(\''+day.d+'\','+c.id+')">✕</span></div></div>';
+  });
+  h+='<div class="addbtn" onclick="openAddCustom(\''+day.d+'\')">＋ Добавить своё</div>';
   h+='</div>';
  });
  document.getElementById('menulist').innerHTML=h;
@@ -202,7 +265,9 @@ function renderDiary(){
    mh+='<div class="mealrow"><div class="info"><b>'+it[1]+'</b><span class="tag">'+it[0]+' · '+it[2]+' ккал</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div></div>';
   });
  }
- document.getElementById('dMeals').innerHTML=mh||'<p class="note">Питайтеся по своему усмотрению.</p>';
+ (S.custom[DOW[dow]]||[]).forEach(c=>{const k='c_'+c.id,on=!!S.food[k];if(on)mt+=(+c.k||0);
+   mh+='<div class="mealrow"><div class="info"><b>'+esc(c.n)+'</b><span class="tag">моё · '+c.k+' ккал</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div></div>';});
+ document.getElementById('dMeals').innerHTML=mh;
  document.getElementById('dKcal').textContent='Отмечено: '+mt+' ккал из плана';
  const plist=['Основная практика','Спина','Растяжка'];
  let ph='';
@@ -211,6 +276,8 @@ function renderDiary(){
   ph+='<div class="mealrow"><div class="info"><b>'+name+'</b><span class="tag">'+(pracForDow(dow)[pi]||'')+'</span></div><div class="chkbx '+(on?'on':'')+'" onclick="togglePrac(\''+tk+'\','+pi+')">'+(on?'✓':'')+'</div></div>';
  });
  document.getElementById('dPrac').innerHTML=ph;
+ const vt=todayKey(),vs=vitSlots(),vd=vs.filter(x=>S.vit[vt]&&S.vit[vt][x.s.id]).length;
+ document.getElementById('dVit').innerHTML=vs.length?'<span class="tag" style="font-size:13px">💊 Витамины: '+vd+' из '+vs.length+' отмечено</span>':'';
 }
 function togglePrac(tk,pi){S.prac[tk]=S.prac[tk]||{};S.prac[tk][pi]=!S.prac[tk][pi];if(!S.prac[tk][pi])delete S.prac[tk][pi];sv();renderDiary();}
 function saveStart(){S.start=document.getElementById('startDate').value||null;sv();renderDiary();}
@@ -229,13 +296,198 @@ function doRestore(inp){
  r.readAsText(f);
 }
 
+
+/* ===== esc и модалки ===== */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
+function todayDow(){return DOW[(new Date().getDay()+6)%7];}
+function nowHM(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function openSheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('ovl').classList.add('on');window.scrollTo(0,0);}
+function closeSheet(){document.getElementById('ovl').classList.remove('on');stopScan();}
+document.getElementById('ovl').addEventListener('click',e=>{if(e.target.id=='ovl')closeSheet();});
+
+/* ===== Своя еда ===== */
+function openAddCustom(dow){
+ openSheet('<h3>＋ Своя еда · '+dow+'</h3><label>Название</label><input id="cN" placeholder="Например, сырники у мамы"><label>Калории (примерно — это нормально)</label><input id="cK" type="number" inputmode="numeric" placeholder="350"><label>Порция (необязательно)</label><input id="cG" placeholder="150 г"><div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="saveCustom(\''+dow+'\')">Добавить</button><button class="btn bsec" onclick="closeSheet()">Отмена</button></div>');
+ setTimeout(()=>document.getElementById('cN').focus(),100);
+}
+function saveCustom(dow){
+ const n=document.getElementById('cN').value.trim(),k=+document.getElementById('cK').value,g=document.getElementById('cG').value.trim();
+ if(!n||!k){alert('Укажите название и калории.');return;}
+ S.custom[dow]=S.custom[dow]||[];S.custom[dow].push({id:Date.now(),n:n,k:k,g:g});sv();closeSheet();renderMenu();renderDiary();
+}
+function delCustom(dow,id){S.custom[dow]=(S.custom[dow]||[]).filter(c=>c.id!=id);sv();renderMenu();renderDiary();}
+
+/* ===== Сканер штрихкодов и поиск ===== */
+let scanRunning=false;
+function stopScan(){scanRunning=false;try{const v=document.getElementById('scanv');if(v&&v.srcObject){v.srcObject.getTracks().forEach(t=>t.stop());v.srcObject=null;}}catch(e){}}
+function openScan(){
+ openSheet('<h3>📷 Сканер штрихкода</h3><video id="scanv" autoplay playsinline muted></video><div class="spin" id="scanmsg">Запускаю камеру…</div><label>Нет камеры под рукой? Введите цифры кода вручную</label><input id="scanman" inputmode="numeric" placeholder="4600000000000"><div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="scanManual()">Найти</button><button class="btn bsec" onclick="closeSheet()">Закрыть</button></div>');
+ startScan();
+}
+function scanManual(){const c=document.getElementById('scanman').value.trim();if(c){stopScan();lookupCode(c);}}
+function startScan(){
+ if('BarcodeDetector' in window){bdStart();return;}
+ if(window.ZXing){zxStart();return;}
+ const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js';
+ s.onload=zxStart;s.onerror=()=>{const m=document.getElementById('scanmsg');if(m)m.textContent='Камера недоступна — введите цифры штрихкода вручную.';};
+ document.head.appendChild(s);
+}
+async function bdStart(){
+ try{
+  const det=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','code_128','upc_e']});
+  const v=document.getElementById('scanv');
+  const st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+  v.srcObject=st;await v.play();scanRunning=true;
+  const m=document.getElementById('scanmsg');if(m)m.textContent='Наведите камеру на штрихкод продукта';
+  (function loop(){if(!scanRunning)return;det.detect(v).then(cs=>{if(cs.length&&scanRunning){scanRunning=false;stopScan();lookupCode(cs[0].rawValue);}});requestAnimationFrame(loop);})();
+ }catch(e){const m=document.getElementById('scanmsg');if(m)m.textContent='Камера недоступна (нужно разрешение Safari) — введите цифры вручную.';}
+}
+function zxStart(){
+ try{
+  const reader=new ZXing.BrowserMultiFormatReader();
+  reader.decodeFromVideoDevice(undefined,'scanv',(r)=>{if(r&&scanRunning!==false){scanRunning=false;stopScan();lookupCode(r.getText());}});
+  scanRunning=true;const m=document.getElementById('scanmsg');if(m)m.textContent='Наведите камеру на штрихкод продукта';
+ }catch(e){const m=document.getElementById('scanmsg');if(m)m.textContent='Камера недоступна — введите цифры вручную.';}
+}
+async function lookupCode(code){
+ openSheet('<h3>📷 Сканер штрихкода</h3><div class="spin">Ищу продукт '+esc(code)+' в базе…</div>');
+ let p=null;
+ try{
+  const r=await fetch('https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json');
+  const j=await r.json();
+  if(j.status===1){const n=j.product.nutriments||{};let kc=n['energy-kcal_100g'];if(kc==null&&n.energy_100g)kc=n.energy_100g/4.184;
+   p={name:j.product.product_name||('Продукт '+code),kcal:kc!=null?Math.round(kc):null};}
+ }catch(e){}
+ if(!p){openSheet('<h3>📷 Сканер штрихкода</h3><p class="note">Продукт с кодом '+esc(code)+' не нашёлся в базе. Частая история для редких марок — добавьте его вручную, это займёт 10 секунд.</p><div class="rowbtns"><button class="btn bprim" style="flex:1" onclick=\'openAddCustom("'+todayDow()+'")\'>＋ Добавить своё</button><button class="btn bsec" onclick="closeSheet()">Закрыть</button></div>');return;}
+ askGrams(p);
+}
+function openSearch(){
+ openSheet('<h3>🔎 Поиск по названию</h3><input id="srq" placeholder="Например, творог 5%"><div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="doSearch()">Найти</button><button class="btn bsec" onclick="closeSheet()">Закрыть</button></div><div id="srres"></div>');
+ setTimeout(()=>document.getElementById('srq').focus(),100);
+}
+async function doSearch(){
+ const q=document.getElementById('srq').value.trim();if(!q)return;
+ document.getElementById('srres').innerHTML='<div class="spin">Ищу в базе Open Food Facts…</div>';
+ let list=[];
+ try{
+  const r=await fetch('https://world.openfoodfacts.org/cgi/search.pl?search_terms='+encodeURIComponent(q)+'&search_simple=1&action=process&json=1&page_size=6');
+  const j=await r.json();
+  list=(j.products||[]).map(p=>{const n=p.nutriments||{};let kc=n['energy-kcal_100g'];if(kc==null&&n.energy_100g)kc=n.energy_100g/4.184;return{name:(p.product_name||'')+(p.brands?' · '+p.brands:''),kcal:kc!=null?Math.round(kc):null};}).filter(x=>x.name);
+ }catch(e){}
+ if(!list.length){document.getElementById('srres').innerHTML='<p class="note">Ничего не нашлось. Попробуйте другое название или добавьте вручную кнопкой «＋ Добавить своё».</p>';return;}
+ window.SRCHRES=list;
+ document.getElementById('srres').innerHTML=list.map((p,i)=>'<div class="scanres" onclick="pickSearch('+i+')"><b>'+esc(p.name)+'</b> <span class="kcal">· '+(p.kcal!=null?p.kcal+' ккал/100 г':'калории укажем сами')+'</span></div>').join('');
+}
+function pickSearch(i){askGrams(window.SRCHRES[i]);}
+function askGrams(p){
+ const chips=[30,50,100,150,200,250];
+ window.GRAMPROD=p;
+ openSheet('<h3>🥗 Сколько съели?</h3><div class="prodname">'+esc(p.name)+'</div><div class="prodsub">'+(p.kcal!=null?p.kcal+' ккал на 100 г':'')+'</div>'+
+ (p.kcal!=null?'':'<label>Калории на 100 г (посмотрите на упаковке)</label><input id="pk100" type="number" inputmode="numeric" placeholder="120">')+
+ '<label>Порция</label><div class="grambtns">'+chips.map(g=>'<span class="gbtn" onclick="pickGram(this,'+g+')">'+g+' г</span>').join('')+'</div><input id="pg" type="number" inputmode="numeric" placeholder="или своя граммовка"><div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="saveScanProd()">Добавить на сегодня</button><button class="btn bsec" onclick="closeSheet()">Отмена</button></div>');
+}
+function pickGram(el,g){document.querySelectorAll('.gbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('pg').value=g;}
+function saveScanProd(){
+ const p=window.GRAMPROD;
+ let g=+document.getElementById('pg').value;
+ if(!g){alert('Выберите порцию или введите граммы.');return;}
+ if(p.kcal==null){p.kcal=+document.getElementById('pk100').value;if(!p.kcal){alert('Укажите калории на 100 г.');return;}}
+ const k=Math.round(p.kcal*g/100),n=p.name+' ('+g+' г)';
+ S.custom[todayDow()]=S.custom[todayDow()]||[];S.custom[todayDow()].push({id:Date.now(),n:n,k:k,g:''});
+ sv();closeSheet();renderMenu();renderDiary();
+}
+
+/* ===== Витамины ===== */
+const VITS=[
+ {id:'vita',icon:'🥤',t:'Vitameal',slots:[{id:'vita1',time:'08:00',when:'завтрак',dose:'1 порция (30 г) с водой или молоком'}]},
+ {id:'coll',icon:'✨',t:'Коллаген',slots:[{id:'coll1',time:'08:00',when:'утром, можно натощак',dose:'1 порция (мерная ложка)'}]},
+ {id:'omega',icon:'🐟',t:'Омега-3',slots:[{id:'om1',time:'08:00',when:'с завтраком',dose:'1 капсула'},{id:'om2',time:'13:00',when:'с обедом',dose:'1 капсула'}]},
+ {id:'zinc',icon:'⚡',t:'Цинк хелат',slots:[{id:'zn1',time:'13:30',when:'после обеда (не натощак)',dose:'1 капсула (25 мг)'}]},
+ {id:'magn',icon:'🌙',t:'Магний B6',slots:[{id:'mg1',time:'20:00',when:'вечером, с ужином',dose:'1 таблетка'}]}
+];
+function slotCfg(s){const o=(S.vitcfg||{})[s.id];return o?Object.assign({},s,o):s;}
+function vitSlots(){const t=[];VITS.forEach(v=>v.slots.forEach(s0=>{const s=slotCfg(s0);s.sup=v.t;s.icon=v.icon;t.push({sup:v,s:s});}));return t;}
+function vMarked(date,id){return !!(S.vit[date]&&S.vit[date][id]);}
+function toggleVit(id){const t=todayKey();S.vit[t]=S.vit[t]||{};if(S.vit[t][id])delete S.vit[t][id];else S.vit[t][id]=true;sv();renderVit();updVitBanner();updVitBadge();renderDiary();}
+function streakOf(v){
+ let n=0,d=new Date();
+ if(!v.slots.map(slotCfg).every(s=>vMarked(todayKey(),s.id)))d.setDate(d.getDate()-1);
+ for(let i=0;i<400;i++){const k=keyOf(d);if(v.slots.map(slotCfg).every(s=>vMarked(k,s.id))){n++;d.setDate(d.getDate()-1);}else break;}
+ return n;
+}
+function renderVit(){
+ const t=todayKey(),slots=vitSlots().slice().sort((a,b)=>a.s.time.localeCompare(b.s.time));
+ const done=slots.filter(x=>vMarked(t,x.s.id)).length;
+ document.getElementById('vitToday').innerHTML='<b>Сегодня</b> <span class="note">· '+done+' из '+slots.length+' приёмов</span>'+
+  slots.map(x=>{const on=vMarked(t,x.s.id);
+   return '<div class="mealrow"><span class="tchip">'+x.s.time+'</span><div class="info"><b>'+esc(x.s.dose)+'</b><span class="tag">'+x.s.icon+' '+esc(x.s.when)+'</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleVit(\''+x.s.id+'\')">'+(on?'✓':'')+'</div></div>';}).join('');
+ let h='';
+ VITS.forEach(v=>{
+  const st=streakOf(v);
+  h+='<div class="card"><div class="vithead"><span class="ic">'+v.icon+'</span><b>'+esc(v.t)+'</b><span class="st">'+(st>0?'🔥 серия '+st+' дн.':'')+'</span><span class="edit" onclick="openVitEdit(\''+v.id+'\')">✎</span></div>';
+  v.slots.map(slotCfg).forEach(s=>{const on=vMarked(t,s.id);
+   h+='<div class="mealrow"><span class="tchip">'+s.time+'</span><div class="info"><b>'+esc(s.dose)+'</b><span class="tag">'+esc(s.when)+'</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleVit(\''+s.id+'\')">'+(on?'✓':'')+'</div></div>';});
+  h+='</div>';
+ });
+ document.getElementById('vitList').innerHTML=h;
+}
+function openVitEdit(supId){
+ const v=VITS.find(x=>x.id==supId);
+ openSheet('<h3>✎ '+v.icon+' '+esc(v.t)+'</h3>'+v.slots.map(s=>{const c=slotCfg(s);
+  return '<div class="srow" style="margin-bottom:12px"><label>Время · '+esc(c.when)+'</label><input type="time" value="'+c.time+'" data-time="'+s.id+'"><label>Дозировка</label><input value="'+esc(c.dose)+'" data-dose="'+s.id+'"></div>';}).join('')+
+  '<div class="rowbtns"><button class="btn bprim" style="flex:1" onclick="saveVitCfg(\''+supId+'\')">Сохранить</button><button class="btn bsec" onclick="closeSheet()">Отмена</button></div>');
+}
+function saveVitCfg(supId){
+ const v=VITS.find(x=>x.id==supId);
+ S.vitcfg=S.vitcfg||{};
+ v.slots.forEach(s=>{
+  const ti=document.querySelector('[data-time="'+s.id+'"]'),di=document.querySelector('[data-dose="'+s.id+'"]');
+  if(ti&&di)S.vitcfg[s.id]={time:ti.value||s.time,dose:di.value||s.dose};
+ });
+ sv();closeSheet();renderVit();updVitBanner();updVitBadge();
+}
+function updVitBanner(){
+ const t=todayKey(),due=vitSlots().filter(x=>!vMarked(t,x.s.id));
+ const el=document.getElementById('vitBanner');
+ el.innerHTML=due.length?'<div class="vitbanner due">💊 Осталось сегодня: '+due.map(x=>x.s.icon+' '+x.s.sup+' — '+x.s.time).join(', ')+'</div>':'<div class="vitbanner ok">✅ Все приёмы на сегодня отмечены. Красиво!</div>';
+}
+function updVitBadge(){
+ const t=todayKey(),due=vitSlots().filter(x=>!vMarked(t,x.s.id));
+ document.getElementById('vitdot').className='tdot'+(due.length?' on':'');
+}
+function updVitPerm(){
+ const el=document.getElementById('vitPerm');if(!el)return;
+ if(!('Notification' in window)){el.textContent='Уведомления в этом браузере недоступны — ориентируйтесь на баннер выше.';return;}
+ if(Notification.permission==='granted')el.textContent='🔔 Напоминания включены: пока «ЗенТарелка» открыта, телефон напомнит, когда пора выпить.';
+ else if(Notification.permission==='denied')el.textContent='Уведомления запрещены — разрешите их в настройках Safari, если захотите.';
+}
+function vitNotif(){
+ if(!('Notification' in window)){alert('Уведомления в этом браузере недоступны.');return;}
+ Notification.requestPermission().then(()=>{updVitPerm();vitTick();});
+}
+const vitFired={};
+function vitTick(){
+ const t=todayKey(),h=nowHM();
+ vitSlots().forEach(x=>{
+  if(vMarked(t,x.s.id))return;
+  const c=slotCfg(x.s);if(c.time>h)return;
+  if(h0(c.time)>h0(h)-90&&!vitFired[t+x.s.id]){
+   vitFired[t+x.s.id]=1;
+   if('Notification' in window&&Notification.permission==='granted'){try{new Notification('💊 ЗенТарелка',{body:x.s.sup+': '+c.dose});}catch(e){}}
+  }
+ });
+ updVitBanner();updVitBadge();
+}
+function h0(s){const p=s.split(':');return (+p[0])*60+(+p[1]);}
+setInterval(vitTick,30000);
+
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
  document.querySelectorAll('.section').forEach(x=>x.classList.remove('on'));
  t.classList.add('on');document.getElementById('sec-'+t.dataset.s).classList.add('on');
  window.scrollTo(0,0);
 }));
-function renderAll(){renderMenu();renderYoga();renderFbar();renderRec();renderDiary();
+function renderAll(){renderMenu();renderYoga();renderFbar();renderRec();renderDiary();renderVit();updVitBanner();updVitBadge();updVitPerm();
  if(S.lastbk)document.getElementById('lastbk').textContent='Последний бэкап: '+S.lastbk;}
 renderAll();
 </script>
