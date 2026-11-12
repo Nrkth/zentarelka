@@ -2,388 +2,242 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#6d2a8f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#5e3f97">
+<meta name="apple-mobile-web-app-title" content="ЗенТарелка">
 <title>ЗенТарелка</title>
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAALuElEQVR4nO3dQXYTRxtAUZOTfcFKYMqOYJqdZGn/gBx+H8CSbEvdX9W7d5BJIClVy9+rbhn84fPHb08A9Px19gIAOIcAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAEDU32cvAB7rn3+/vue3f/n0/V4rgWk+fP747ew1wB28c9C/ljCwAQFgSQeP+1tIAssRAJYxcOi/RAxYggAw2kJD/yViwFgCwEQbzP3fKQHTCACDPGLuv3PsDlwS3IsAcL67DNmDp+qKa4ZfCACn2ek79Hd6LXQIACd427hcaEpu/wLZgwBwnOBYDL5kFiIAHOG1c3DLCWgTmEYAeKxXTb3IyLMnDCEAPIoxd5n94XQCwP3dPtrMtSfbxXkEgDu7cZyZZb+wbxxPALibW0aY+XWVbeQwAsAdmFl3Z0s5gADwLubUQ9leHkoAeLur48lsugv7zIMI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">
-<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAALuElEQVR4nO3dQXYTRxtAUZOTfcFKYMqOYJqdZGn/gBx+H8CSbEvdX9W7d5BJIClVy9+rbhn84fPHb08A9Px19gIAOIcAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAEDU32cvAB7rn3+/vue3f/n0/V4rgWk+fP747ew1wB28c9C/ljCwAQFgSQeP+1tIAssRAJYxcOi/RAxYggAw2kJD/yViwFgCwEQbzP3fKQHTCACDPGLuv3PsDlwS3IsAcL67DNmDp+qKa4ZfCACn2ek79Hd6LXQIACd427hcaEpu/wLZgwBwnOBYDL5kFiIAHOG1c3DLCWgTmEYAeKxXTb3IyLMnDCEAPIoxd5n94XQCwP3dPtrMtSfbxXkEgDu7cZyZZb+wbxxPALibW0aY+XWVbeQwAsAdmFl3Z0s5gADwLubUQ9leHkoAeLur48lsugv7zIMI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">
-<link rel="manifest" href='data:application/manifest+json,{\"name\":\"ЗенТарелка\",\"short_name\":\"ЗенТарелка\",\"start_url\":\".\",\"display\":\"standalone\",\"background_color\":\"%235e3f97\",\"theme_color\":\"%235e3f97\",\"icons\":[{\"src\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAALuElEQVR4nO3dQXYTRxtAUZOTfcFKYMqOYJqdZGn/gBx+H8CSbEvdX9W7d5BJIClVy9+rbhn84fPHb08A9Px19gIAOIcAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAEDU32cvAB7rn3+/vue3f/n0/V4rgWk+fP747ew1wB28c9C/ljCwAQFgSQeP+1tIAssRAJYxcOi/RAxYggAw2kJD/yViwFgCwEQbzP3fKQHTCACDPGLuv3PsDlwS3IsAcL67DNmDp+qKa4ZfCACn2ek79Hd6LXQIACd427hcaEpu/wLZgwBwnOBYDL5kFiIAHOG1c3DLCWgTmEYAeKxXTb3IyLMnDCEAPIoxd5n94XQCwP3dPtrMtSfbxXkEgDu7cZyZZb+wbxxPALibW0aY+XWVbeQwAsAdmFl3Z0s5gADwLubUQ9leHkoAeLur48lsugv7zIMI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\",\"sizes\":\"512x512\",\"type\":\"image/png\"}]}'>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <style>
-:root{--purple:#5e3f97;--lilac:#8b6fc9;--bg:#f6f4fb;--card:#fff;--green:#3fae6a;--orange:#e8963f;--red:#d95f5f}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:#2d2a3a;padding-bottom:90px}
-header{background:linear-gradient(135deg,var(--purple),var(--lilac));color:#fff;padding:22px 18px 26px;border-radius:0 0 24px 24px}
-header h1{font-size:24px;font-weight:700}
-header p{font-size:13px;opacity:.85;margin-top:4px}
-main{padding:14px}
-.section{display:none}.section.active{display:block}
-.sec-title{font-size:18px;font-weight:700;margin:6px 0 10px}
-.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(60,40,110,.08)}
-.yday{border-left:4px solid var(--lilac)}
-.yday h3{font-size:16px;margin-bottom:6px}
-.chip{display:inline-block;background:#efe9fb;color:var(--purple);border-radius:20px;padding:3px 10px;font-size:12px;margin:2px 4px 2px 0}
-.chip.g{background:#e6f6ec;color:var(--green)}
-.chip.o{background:#fdf0e2;color:var(--orange)}
-.watchbtn{display:inline-block;background:var(--purple);color:#fff;border:none;border-radius:12px;padding:9px 16px;font-size:14px;margin-top:8px;width:100%}
-.player{margin-top:10px;border-radius:12px;overflow:hidden;position:relative;padding-top:56.25%;display:none}
-.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
-.fbtn{white-space:nowrap;background:#fff;border:1px solid #ddd0f0;color:var(--purple);border-radius:20px;padding:8px 14px;font-size:13px}
-.fbtn.on{background:var(--purple);color:#fff;border-color:var(--purple)}
-.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.rcard{background:#fff;border-radius:16px;padding:12px;box-shadow:0 2px 8px rgba(60,40,110,.08)}
-.rcard .em{font-size:30px}
-.rcard b{display:block;font-size:13px;margin-top:6px;line-height:1.3}
-.rcard span{font-size:11px;color:#8a85a0}
-.daycard h3{display:flex;justify-content:space-between;align-items:center;font-size:16px}
-.kcal{background:#e6f6ec;color:var(--green);border-radius:12px;padding:3px 10px;font-size:12px;font-weight:600}
-.meal{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;background:#faf8ff;margin-top:8px;cursor:pointer}
-.meal .mi b{display:block;font-size:14px}
-.meal .mi span{font-size:12px;color:#8a85a0}
-.meal .mk{font-weight:700;color:var(--purple);font-size:14px;white-space:nowrap;margin-left:8px}
-.modal{position:fixed;inset:0;background:rgba(30,20,60,.5);display:none;z-index:50;align-items:flex-end}
-.modal.open{display:flex}
-.sheet{background:#fff;width:100%;max-height:88vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px 30px}
-.sheet h2{font-size:20px;margin-bottom:6px}
-.close{position:sticky;top:0;float:right;background:#efe9fb;color:var(--purple);border:none;border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600}
-.ing li{margin:4px 0 4px 18px;font-size:14px}
-.step{margin:10px 0;padding:10px 12px;background:#faf8ff;border-radius:12px;font-size:14px;line-height:1.45}
-.step b{color:var(--purple)}
-.note{background:#fdf0e2;border-radius:12px;padding:10px 12px;font-size:13px;color:#7a5b2e;margin-top:8px}
-/* дневник */
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal .dow{font-size:11px;text-align:center;color:#8a85a0;padding:4px 0}
-.cday{aspect-ratio:1;border-radius:10px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;cursor:pointer;border:1px solid #eee}
-.cday.eaten{background:#e6f6ec;border-color:var(--green);font-weight:600}
-.cday.today{border:2px solid var(--purple)}
-.cday small{font-size:8px;color:var(--green)}
-.bar{height:10px;background:#eee;border-radius:6px;overflow:hidden;margin:8px 0}
-.bar div{height:100%;background:var(--green);width:0%}
-.dishline{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:10px;background:#faf8ff;margin-top:6px;font-size:13px}
-.dishline input{width:20px;height:20px}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -2px 10px rgba(60,40,110,.12);display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom))}
-nav button{flex:1;background:none;border:none;font-size:11px;color:#9a94b5;padding:6px 0}
-nav button span{display:block;font-size:20px}
-nav button.on{color:var(--purple);font-weight:700}
-.count{background:#fff;border-radius:16px;padding:16px;text-align:center;margin-bottom:12px;box-shadow:0 2px 8px rgba(60,40,110,.08)}
-.count .big{font-size:34px;font-weight:800;color:var(--purple)}
-input[type=date],select{border:1px solid #ddd0f0;border-radius:12px;padding:10px;font-size:14px;width:100%;background:#fff}
+:root{--violet:#6d2a8f;--pink:#c94fa8;--bg:#f6f2fa;--card:#fff;--ink:#2d2240;--mut:#8a7fa0;--green:#2e9e63;--amber:#c77c1c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#6633cc 0%,#c940a0 100%);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 18px 16px}
+header h1{font-size:24px;font-weight:800;margin:0;letter-spacing:.3px}
+header p{margin:4px 0 0;font-size:13px;opacity:.85}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e6def2;position:sticky;top:0;z-index:5}
+.tab{flex:1;text-align:center;padding:12px 2px;font-size:14px;font-weight:700;color:var(--mut);border-bottom:3px solid transparent}
+.tab.on{color:var(--violet);border-color:var(--violet)}
+main{padding:16px 16px calc(30px + env(safe-area-inset-bottom))}
+.section{display:none}.section.on{display:block}
+h2{font-size:19px;margin:4px 0 12px}
+.card{background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 2px 10px rgba(80,40,120,.07)}
+.mealrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f1ecf7}
+.mealrow:last-child{border:none}
+.mealrow .info{flex:1}.mealrow b{font-size:15px}.mealrow .tag{font-size:11px;color:var(--mut);display:block}
+.chkbx{width:28px;height:28px;border-radius:9px;border:2px solid #d8cdea;flex:none;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff}
+.chkbx.on{background:var(--green);border-color:var(--green)}
+.daykcal{font-size:13px;color:var(--mut);margin:8px 0 4px}
+.vgrid{display:grid;grid-template-columns:1fr;gap:12px}
+.vcard{border-radius:16px;overflow:hidden;box-shadow:0 3px 12px rgba(80,40,120,.13)}
+.vhead{padding:18px 16px;color:#fff;cursor:pointer}
+.vhead .t{font-size:17px;font-weight:800}.vhead .s{font-size:13px;opacity:.9;margin-top:3px}
+.vhead .pl{margin-top:10px;font-size:13px;background:rgba(255,255,255,.22);display:inline-block;padding:5px 12px;border-radius:20px}
+.vframe{display:none;background:#000}.vframe.on{display:block}
+.vframe iframe{width:100%;height:230px;border:0;display:block}
+.filterbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px}
+.fbtn{padding:7px 14px;border-radius:20px;background:#fff;color:var(--mut);font-size:13px;font-weight:700;white-space:nowrap;border:1px solid #e6def2}
+.fbtn.on{background:var(--violet);color:#fff;border-color:var(--violet)}
+.rec .kcal{color:var(--mut);font-size:13px}
+.rec .steps li{margin-bottom:7px;font-size:14.5px}
+.rec .ing{font-size:14px;background:#f6f0fb;border-radius:10px;padding:8px 12px;margin:8px 0}
+.startrow{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+input[type=date],select{padding:10px;border-radius:12px;border:1px solid #d8cdea;font-size:15px;background:#fff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:10px 0}
+.cel{aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;background:#fff;color:var(--ink);border:1px solid #eae3f4;cursor:pointer}
+.cel .dot{width:6px;height:6px;border-radius:50%;margin-top:2px;background:transparent}
+.cel .dot.done{background:var(--green)}.cel .dot.part{background:var(--amber)}
+.cel.today{border-color:var(--violet);border-width:2px}
+.stat3{display:flex;gap:10px;margin-bottom:12px}
+.stat3 .card{flex:1;text-align:center;margin:0;padding:12px 6px}
+.stat3 b{font-size:22px;color:var(--violet);display:block}
+.stat3 span{font-size:11px;color:var(--mut)}
+.btn{display:block;width:100%;padding:13px;border-radius:13px;border:0;font-size:15px;font-weight:800;text-align:center;cursor:pointer}
+.bprim{background:linear-gradient(135deg,#7c3aed,#c94fa8);color:#fff}
+.bsec{background:#fff;color:var(--violet);border:2px solid var(--violet)}
+.backupbox{background:linear-gradient(135deg,#7c3aed,#c94fa8);border-radius:16px;padding:16px;color:#fff;margin-top:16px}
+.backupbox h3{margin:0 0 6px;font-size:16px}
+.backupbox p{font-size:13px;opacity:.9;margin:0 0 10px}
+.backupbox .bsec{border-color:#fff;color:#fff;background:rgba(255,255,255,.14);margin-top:8px}
+.lastbk{font-size:12px;opacity:.85;margin-top:8px}
+input[type=file]{display:none}
+.note{font-size:13px;color:var(--mut)}
+.warn{font-size:12.5px;color:#b45309;background:#fdf3e3;border-radius:10px;padding:9px 12px;margin-top:10px}
 </style>
 </head>
 <body>
-<header>
-  <h1>🧘 ЗенТарелка</h1>
-  <p>Йога для похудения · ПП-меню · Дневник</p>
-</header>
+<header><h1>🧘 ЗенТарелка</h1><p>йога · питание · дневник прогресса</p></header>
+<div class="tabs">
+<div class="tab on" data-s="food">🍽 Питание</div>
+<div class="tab" data-s="yoga">🧘 Йога</div>
+<div class="tab" data-s="rec">📖 Рецепты</div>
+<div class="tab" data-s="diary">📋 Дневник</div>
+</div>
 <main>
-  <section id="tab-yoga" class="section active">
-    <div class="sec-title">Расписание недели</div>
-    <div class="note" style="margin:0 0 12px">Каждый день: 💪 основная практика (силовая, для похудения) + 🧘 15 минут на спину. Вечером — 🌙 растяжка как заминка. По выходным утром — ☀️ мягкая практика. Блоки можно разбивать в течение дня.</div>
-    <div id="yogaweek"></div>
-    <div class="sec-title" style="margin-top:18px">Бонусная библиотека</div>
-    <div id="yogabonus"></div>
-  </section>
-
-  <section id="tab-food" class="section">
-    <div class="sec-title">План питания на 7 дней</div>
-    <div class="note" style="margin:0 0 12px">≈1200–1310 ккал в день — мягкий дефицит при вашей норме ~1400. Завтрак лёгкий, обед — второе с салатом, супы в ужинах. Нажмите на блюдо — откроется подробный рецепт.</div>
-    <div id="foodweek"></div>
-  </section>
-
-  <section id="tab-rec" class="section">
-    <div class="sec-title">Рецепты</div>
-    <div class="filters" id="rfilters"></div>
-    <div class="rgrid" id="rgrid"></div>
-  </section>
-
-  <section id="tab-diary" class="section">
-    <div class="count">
-      <div>Дней на пути</div>
-      <div class="big" id="daysCount">—</div>
-      <div style="font-size:12px;color:#8a85a0">с даты старта</div>
-      <input type="date" id="startDate" style="margin-top:10px">
-    </div>
-    <div class="card">
-      <div class="sec-title" style="font-size:15px">Календарь</div>
-      <div class="cal" id="calGrid"></div>
-      <div id="calNav" style="display:flex;justify-content:space-between;margin-top:8px">
-        <button class="watchbtn" style="width:auto;padding:8px 14px;background:#efe9fb;color:var(--purple)" onclick="calMove(-1)">←</button>
-        <div id="calLabel" style="font-weight:700;align-self:center;font-size:14px"></div>
-        <button class="watchbtn" style="width:auto;padding:8px 14px;background:#efe9fb;color:var(--purple)" onclick="calMove(1)">→</button>
-      </div>
-    </div>
-    <div class="card" id="dayDetail" style="display:none">
-      <div class="sec-title" id="dayDetailTitle" style="font-size:16px"></div>
-      <div style="font-size:13px;margin-bottom:6px" id="dayKcalLabel"></div>
-      <div class="bar"><div id="dayBar"></div></div>
-      <div class="sec-title" style="font-size:14px;margin-top:12px">Еда за день</div>
-      <div id="dishList"></div>
-      <div class="sec-title" style="font-size:14px;margin-top:12px">Практики</div>
-      <div id="prList"></div>
-    </div>
-  </section>
-</main>
-
-<nav>
-  <button class="on" data-tab="yoga"><span>🧘</span>Йога</button>
-  <button data-tab="food"><span>🥗</span>Питание</button>
-  <button data-tab="rec"><span>📖</span>Рецепты</button>
-  <button data-tab="diary"><span>📅</span>Дневник</button>
-</nav>
-
-<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="sheet" id="sheet"></div>
+<div class="section on" id="sec-food">
+<h2>Меню на неделю</h2>
+<p class="note" style="margin-top:-6px">~1100–1400 ккал в день. Ставьте галочки по мере приёмов пищи — дневник посчитает калории сам.</p>
+<div id="menulist"></div>
 </div>
 
+<div class="section" id="sec-yoga">
+<h2>Тренировки недели</h2>
+<p class="note" style="margin-top:-6px">Основа похудения и тонуса — силовая практика каждый день. Растяжка вечером — заминка. Расписание: пн/ср/пт — интенсив 20 мин, вт/чт/сб — силовая 50 мин, вс — виньяса 40 мин. Плюс спина каждый день.</p>
+<div class="vgrid" id="vgrid"></div>
+</div>
+
+<div class="section" id="sec-rec">
+<h2>Рецепты</h2>
+<div class="filterbar" id="fbar"></div>
+<div id="reclist"></div>
+</div>
+
+<div class="section" id="sec-diary">
+<h2>Дневник</h2>
+<div class="startrow"><label class="note">Старт:</label><input type="date" id="startDate"><button class="btn bsec" style="width:auto;padding:9px 14px" onclick="saveStart()">Сохранить</button></div>
+<div class="stat3">
+<div class="card"><b id="stDays">0</b><span>дней пути</span></div>
+<div class="card"><b id="stPrac">0</b><span>дней с практикой</span></div>
+<div class="card"><b id="stWeek">0</b><span>дней за неделю</span></div>
+</div>
+<div class="card" id="calwrap"><div class="cal" id="cal"></div></div>
+<div class="card">
+<h3 style="margin:0 0 8px;font-size:16px" id="dTitle">Сегодня</h3>
+<div id="dMeals"></div>
+<div class="daykcal" id="dKcal"></div>
+<h3 style="margin:12px 0 6px;font-size:16px">Практики</h3>
+<div id="dPrac"></div>
+</div>
+<div class="backupbox">
+<h3>💾 Бэкап данных</h3>
+<p>Скачайте файл с вашими отметками и храните его в «Файлах» на iPhone. Чистка Safari не затронет бэкап, а восстановление вернёт всё на место.</p>
+<button class="btn bprim" onclick="doBackup()">Скачать бэкап</button>
+<button class="btn bsec" onclick="document.getElementById('bkfile').click()">Восстановить из файла</button>
+<input type="file" id="bkfile" accept=".json" onchange="doRestore(this)">
+<div class="lastbk" id="lastbk">Бэкап ещё не делался</div>
+</div>
+</div>
+</main>
 <script>
-const RUTUBE = id => `https://rutube.ru/play/embed/${id}`;
+const MENU = [{"d": "Пн", "name": "Понедельник", "items": [["Завтрак", "Овсянка с яблоком и корицей", 280], ["Обед", "Гречка с куриной грудкой и овощным салатом", 420], ["Ужин", "Томатный суп с фрикадельками из индейки", 350], ["Перекус", "Йогурт без сахара с орехами", 150]]}, {"d": "Вт", "name": "Вторник", "items": [["Завтрак", "Омлет с овощами", 250], ["Обед", "Рис с индейкой и тушёными овощами", 450], ["Ужин", "Кабачки, запечённые с фаршем индейки", 380], ["Перекус", "Творог с ягодами", 120]]}, {"d": "Ср", "name": "Среда", "items": [["Завтрак", "Творог с фруктами и мёдом", 250], ["Обед", "Куриный суп с рисом и овощами", 340], ["Ужин", "Куриный суп с рисом и овощами (сварите на 2 дня)", 340], ["Перекус", "Яблоко и горсть миндаля", 150]]}, {"d": "Чт", "name": "Четверг", "items": [["Завтрак", "Рисовая каша с изюмом", 280], ["Обед", "Картофель с куриной грудкой и огурцом", 450], ["Ужин", "Хек в духовке с помидорами", 350], ["Перекус", "Йогурт без сахара", 100]]}, {"d": "Пт", "name": "Пятница", "items": [["Завтрак", "Овсяноблин с творогом", 300], ["Обед", "Гречневый суп с курицей", 380], ["Ужин", "Помидоры с фаршем и сыром", 360], ["Перекус", "Кефир 1%", 100]]}, {"d": "Сб", "name": "Суббота", "items": [["Завтрак", "Сырники в духовке с йогуртом", 300], ["Обед", "Плов с курицей", 480], ["Ужин", "Курица с овощами в фольге", 370], ["Перекус", "Банан", 100]]}, {"d": "Вс", "name": "Воскресенье", "items": [["Завтрак", "Омлет с помидорами", 260], ["Обед", "Овощной суп с фрикадельками", 350], ["Ужин", "Минтай с кабачками и морковью в фольге", 330], ["Перекус", "Орехи и сухофрукты", 160]]}];
+const RECIPES = [{"t": "Овсянка с яблоком и корицей", "c": "Завтраки", "kcal": 280, "ing": "Овсянка 50 г, яблоко 1 шт., молоко или вода 200 мл, корица", "steps": ["Овсянку залить горячим молоком или водой, варить 5 минут на тихом огне.", "Яблоко натереть или нарезать кубиком, добавить в кашу.", "Довести до вкуса корицей, дать настояться 2 минуты под крышкой."]}, {"t": "Омлет с овощами", "c": "Завтраки", "kcal": 250, "ing": "2 яйца, молоко 50 мл, помидор, болгарский перец, зелень", "steps": ["Овощи нарезать и слегка припустить на антипригарной сковороде 2 минуты.", "Взбить яйца с молоком, влить к овощам.", "Накрыть крышкой, готовить на малом огне 5–7 минут."]}, {"t": "Творог с фруктами", "c": "Завтраки", "kcal": 250, "ing": "Творог 5% 150 г, банан или яблоко, чайная ложка мёда", "steps": ["Творог размять вилкой до гладкости.", "Фрукты нарезать, смешать с творогом.", "Полить мёдом перед подачей."]}, {"t": "Овсяноблин с творогом", "c": "Завтраки", "kcal": 300, "ing": "Овсяные хлопья 30 г, 1 яйцо, молоко 50 мл, творог 50 г", "steps": ["Хлопья измельчить, смешать с яйцом и молоком, дать постоять 5 минут.", "Вылить на сухую антипригарную сковороду, жарить по 2 минуты с каждой стороны.", "Свернуть с творогом внутри, при желании добавить зелень."]}, {"t": "Сырники в духовке", "c": "Завтраки", "kcal": 300, "ing": "Творог 200 г, 1 яйцо, овсяная мука 2 ст. л., йогурт для подачи", "steps": ["Смешать творог, яйцо и муку до плотной массы.", "Сформировать сырники, выложить на пергамент.", "Запекать 20 минут при 180°C, подавать с йогуртом."]}, {"t": "Рисовая каша с изюмом", "c": "Завтраки", "kcal": 280, "ing": "Рис 60 г, молоко 200 мл, изюм 20 г", "steps": ["Рис отварить в молоке на малом огне 15 минут.", "Промытый изюм добавить за 5 минут до конца.", "Дать настояться под крышкой."]}, {"t": "Гречка с куриной грудкой", "c": "Обеды", "kcal": 420, "ing": "Гречка 70 г, куриная грудка 150 г, огурец, помидор, ложка оливкового масла", "steps": ["Гречку отварить до готовности (12–15 минут).", "Грудку нарезать и обжарить с каплей масла до готовности, посолить.", "Овощи нарезать в салат, всё собрать в тарелку."]}, {"t": "Рис с индейкой и овощами", "c": "Обеды", "kcal": 450, "ing": "Рис 70 г, филе индейки 150 г, кабачок, морковь, лук", "steps": ["Рис отварить. Индейку нарезать кубиком.", "Обжарить лук и морковь, добавить индейку, готовить 7 минут.", "Добавить кабачок, тушить 10 минут, соединить с рисом."]}, {"t": "Картофель с куриной грудкой", "c": "Обеды", "kcal": 450, "ing": "Картофель 250 г, куриная грудка 150 г, огурец свежий", "steps": ["Картофель отварить или запечь в мундире.", "Грудку обжарить с каплей масла до румяности.", "Подать с огурцом."]}, {"t": "Плов с курицей", "c": "Обеды", "kcal": 480, "ing": "Рис 80 г, куриное филе 150 г, морковь, лук, специи для плова", "steps": ["Обжарить лук и морковь, добавить курицу кубиком.", "Всыпать рис, залить водой на 1,5 см выше риса.", "Тушить под крышкой 20 минут на малом огне, не мешать."]}, {"t": "Гречневый суп с курицей", "c": "Обеды", "kcal": 380, "ing": "Гречка 50 г, куриное филе 150 г, картофель, морковь, лук", "steps": ["Отварить курицу, вынуть, нарезать.", "В бульон добавить картофель и гречку, варить 15 минут.", "Вернуть курицу с пассерованными овощами, проварить 5 минут."]}, {"t": "Овощной суп с фрикадельками", "c": "Обеды", "kcal": 350, "ing": "Фарш индейки 200 г, картофель, морковь, лук, зелень, бульон", "steps": ["Скатать фрикадельки, опустить в кипящий бульон.", "Через 10 минут добавить картофель.", "Пассерованные лук и морковь, варить ещё 10 минут, посыпать зеленью."]}, {"t": "Томатный суп с фрикадельками", "c": "Ужины", "kcal": 350, "ing": "Фарш индейки 200 г, томаты в собственном соку 200 г, лук, морковь, бульон 700 мл", "steps": ["Из фарша скатать маленькие фрикадельки.", "В кипящий бульон опустить фрикадельки, варить 10 минут.", "Добавить пассерованные лук и морковь, томаты, соль, варить ещё 10 минут."]}, {"t": "Куриный суп с рисом", "c": "Ужины", "kcal": 340, "ing": "Куриное филе 200 г, рис 40 г, картофель 2 шт., морковь, лук", "steps": ["Отварить филе 20 минут, вынуть и нарезать.", "В бульон добавить картофель и рис, варить 12 минут.", "Вернуть курицу, добавить пассерованные овощи, проварить 5 минут."]}, {"t": "Кабачки с фаршем индейки", "c": "Ужины", "kcal": 380, "ing": "Кабачки 2 шт., фарш индейки 250 г, сметана 2 ст. л., сыр 30 г", "steps": ["Кабачки разрезать вдоль, ложкой вынуть серединку.", "Смешать фарш с мякотью кабачка, посолить, наполнить половинки.", "Полить сметаной, посыпать сыром, запекать 30 минут при 180°C."]}, {"t": "Хек в духовке с помидорами", "c": "Ужины", "kcal": 350, "ing": "Хек 2 тушки, помидоры 2 шт., лимон, лук, специи для рыбы", "steps": ["Рыбу сбрызнуть лимоном, посолить, дать полежать 10 минут.", "Выложить на противень с кольцами лука и кружками помидоров.", "Запекать 25 минут при 180°C."]}, {"t": "Помидоры с фаршем и сыром", "c": "Ужины", "kcal": 360, "ing": "Крупные помидоры 4 шт., фарш индейки 250 г, сыр 40 г, чеснок", "steps": ["Срезать крышечки, аккуратно вынуть мякоть.", "Смешать фарш с мякотью и чесноком, наполнить помидоры.", "Посыпать сыром, запекать 25 минут при 180°C."]}, {"t": "Курица с овощами в фольге", "c": "Ужины", "kcal": 370, "ing": "Куриное бедро без кожи 200 г, кабачок, перец, морковь, специи", "steps": ["Овощи крупно нарезать, выложить на лист фольги.", "Сверху положить курицу, посолить, добавить специи.", "Завернуть конвертом, запекать 35 минут при 190°C."]}, {"t": "Минтай с кабачками в фольге", "c": "Ужины", "kcal": 330, "ing": "Минтай 2 тушки, кабачок, морковь, лимон", "steps": ["Рыбу посолить, сбрызнуть лимоном.", "Выложить на фольгу с кружками кабачка и моркови.", "Завернуть и запекать 25 минут при 190°C."]}, {"t": "Йогурт с орехами", "c": "Перекусы", "kcal": 150, "ing": "Йогурт без сахара 150 г, грецкие орехи 15 г", "steps": ["Орехи порубить.", "Смешать с йогуртом перед подачей."]}, {"t": "Творог с ягодами", "c": "Перекусы", "kcal": 120, "ing": "Творог 100 г, горсть ягод", "steps": ["Ягоды промыть, смешать с творогом.", "При желании — капля мёда."]}, {"t": "Кефир", "c": "Перекусы", "kcal": 100, "ing": "Кефир 1% — стакан 250 мл", "steps": ["Просто выпить стакан кефира. Отличный вечерний перекус."]}];
+const PRACTICES = [{"id": "power_mon", "t": "Силовая йога: интенсив на всё тело", "sub": "20 мин · Елена Малова / Yogamatic", "v": "ee341c089dbbf257ec3e5a1686bccd7c", "c1": "#7c3aed", "c2": "#a855f7"}, {"id": "power_mid", "t": "Силовая йога 50 минут", "sub": "Средний уровень · Елена Малова / Yogamatic", "v": "c61a17882773eeb52ff86abf2210c2f8", "c1": "#b45309", "c2": "#f59e0b"}, {"id": "power_sun", "t": "Виньяса на всё тело", "sub": "40 мин · Елена Малова", "v": "379cc632401caaf1dd6b36b1ae545de3", "c1": "#0e7490", "c2": "#06b6d4"}, {"id": "back", "t": "Красивая спина и осанка", "sub": "15 мин · smstretching", "v": "c7708d08a63a9b1c27fff7a81a6d2d51", "c1": "#15803d", "c2": "#22c55e"}, {"id": "stretch", "t": "Вечерняя растяжка", "sub": "20 мин · Mari Stretching", "v": "2fd247a45e65ded03c696ed6044bf99c", "c1": "#9d174d", "c2": "#ec4899"}, {"id": "lumbar", "t": "Йога для поясницы (бонус)", "sub": "15 мин · Люба Йога", "v": "be90ec74ed230096aa22692560073e62", "c1": "#3730a3", "c2": "#6366f1"}];
+const SCHED = {"0": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "1": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "2": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "3": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "4": ["Силовой интенсив 20 мин", "Спина 15 мин", "Вечерняя растяжка"], "5": ["Силовая йога 50 мин", "Спина 15 мин", "Вечерняя растяжка"], "6": ["Виньяса 40 мин", "Спина 15 мин", "Вечерняя растяжка"]};
+const DOW = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
-const YOGA = {
-  main: {
-    mon:{t:"Интенсивная силовая виньяса для похудения",m:"24 мин",d:"Динамичный поток на всё тело: ноги, руки, кор. Больше движения — больше потраченных калорий.",id:"88960b9efd2edba163284e2bd75e0ad9",c:"#8b6fc9"},
-    tue:{t:"Силовая йога для похудения",m:"20 мин",d:"Силовые асаны на пресс, спину и кор с Нелли — йогатерапевтом.",id:"125c800eb89f96556ef202ca7e8d5195",c:"#d98ba3"},
-    wed:{t:"Интенсивная силовая виньяса для похудения",m:"24 мин",d:"Динамичный поток на всё тело: ноги, руки, кор.",id:"88960b9efd2edba163284e2bd75e0ad9",c:"#8b6fc9"},
-    thu:{t:"Силовая йога для похудения",m:"20 мин",d:"Силовые асаны на пресс, спину и кор с Нелли.",id:"125c800eb89f96556ef202ca7e8d5195",c:"#d98ba3"},
-    fri:{t:"Интенсивная силовая виньяса для похудения",m:"24 мин",d:"Динамичный поток на всё тело: ноги, руки, кор.",id:"88960b9efd2edba163284e2bd75e0ad9",c:"#8b6fc9"},
-    sat:{t:"Силовая йога для похудения",m:"20 мин",d:"Силовые асаны на пресс, спину и кор с Нелли.",id:"125c800eb89f96556ef202ca7e8d5195",c:"#d98ba3"},
-    sun:{t:"Силовая виньяса на всё тело",m:"30 мин",d:"Утренняя силовая йога с Вероникой — «прогон» недели в спокойном потоке.",id:"7cfbe452f416c544e04df2d2074c0e8a",c:"#6fa8c9"}
-  },
-  back:{t:"Идеальная осанка за 15 минут",m:"15 мин",d:"Ежедневная гимнастика для спины: растяжка и укрепление. Профилактика остеохондроза и сколиоза.",id:"22cd1d7cbd421ba41eef365f39abd0a2",c:"#3fae6a"},
-  eve:{t:"Вечерняя растяжка на всё тело",m:"20 мин",d:"Спокойный комплекс: снимает спазмы и готовит ко сну.",id:"2fd247a45e65ded03c696ed6044bf99c",c:"#7a6fc9"},
-  morn:{t:"Утренняя йога 15 минут",m:"15 мин",d:"Мягкое пробуждение с Еленой Маловой — по выходным утром.",id:"dc4f66fa60981bd2556f37840da0ba64",c:"#e8963f"}
-};
-const BONUS = [
-  {t:"Йога для спины: снятие боли",m:"15 мин",d:"Экспресс-снятие зажимов в позвоночнике — если спина устала.",id:"5de4535732a0ca12a439b0d49d29c873",c:"#3fae6a"},
-  {t:"Поясница: растяжка и расслабление",m:"24 мин",d:"Мягкая практика Елены Маловой для поясницы.",id:"e65fd0a4c51b438ae876ca703e21af8c",c:"#6fa8c9"},
-  {t:"Мягкая йога для позвоночника",m:"25 мин",d:"Наклоны, скрутки и волны позвоночником с Эвой.",id:"4a50d3dc5ae05d955cd17a8276d48243",c:"#8b6fc9"}
-];
-const DAYS = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
+let S = JSON.parse(localStorage.getItem('zt')||'null')||{start:null,food:{},prac:{},lastbk:null};
 
-function yCard(y, extra){return `<div class="card yday"><h3>${y.t}</h3>
-  <span class="chip" style="background:${y.c}22;color:${y.c}">${y.m}</span>
-  <p style="font-size:13px;color:#6a6480;margin-top:6px">${y.d}</p>
-  <button class="watchbtn" onclick="showPlayer(this,'${y.id}')">▶ Смотреть</button>
-  <div class="player"><iframe loading="lazy" src="https://rutube.ru/play/embed/${y.id}" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
-  ${extra||""}</div>`;}
+function sv(){localStorage.setItem('zt',JSON.stringify(S));}
+function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function keyOf(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');}
+
+function renderMenu(){
+ let h='';
+ MENU.forEach((day,di)=>{
+  let tot=day.items.reduce((a,x)=>a+x[2],0);
+  h+='<div class="card"><b>'+day.name+'</b> <span class="note">· '+tot+' ккал</span>';
+  day.items.forEach((it,ii)=>{
+   const k=day.d+'_'+ii,on=!!S.food[k];
+   h+='<div class="mealrow"><div class="info"><b>'+it[1]+'</b><span class="tag">'+it[0]+' · '+it[2]+' ккал</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div></div>';
+  });
+  h+='</div>';
+ });
+ document.getElementById('menulist').innerHTML=h;
+}
+function toggleFood(k){S.food[k]=!S.food[k];if(!S.food[k])delete S.food[k];sv();renderMenu();renderDiary();}
 
 function renderYoga(){
-  let h="";
-  DAYS.forEach((dn,i)=>{
-    const k=["mon","tue","wed","thu","fri","sat","sun"][i];
-    const we=(i>=5)?yCard(YOGA.morn,""):"";
-    h+=`<div class="card"><h3>${dn}</h3>
-      <span class="chip o">💪 Основная практика</span><span class="chip g">🧘 Спина</span><span class="chip">🌙 Вечером</span>${i>=5?'<span class="chip">☀️ Утром</span>':""}
-      ${yCard(YOGA.main[k])}${yCard(YOGA.back)}${yCard(YOGA.eve)}${we}</div>`;
-  });
-  document.getElementById("yogaweek").innerHTML=h;
-  document.getElementById("yogabonus").innerHTML=BONUS.map(y=>yCard(y)).join("");
+ let h='';
+ PRACTICES.forEach((p,i)=>{
+  h+='<div class="vcard"><div class="vhead" style="background:linear-gradient(135deg,'+p.c1+','+p.c2+')" onclick="openV('+i+')"><div class="t">'+p.t+'</div><div class="s">'+p.sub+'</div><div class="pl">▶ Смотреть</div></div><div class="vframe" id="vf'+i+'"><iframe src="https://rutube.ru/play/embed/'+p.v+'" allowfullscreen allow="autoplay; fullscreen; encrypted-media"></iframe></div></div>';
+ });
+ document.getElementById('vgrid').innerHTML=h;
 }
-function showPlayer(btn,id){
-  const p=btn.nextElementSibling;
-  p.style.display=p.style.display==="block"?"none":"block";
+function openV(i){document.getElementById('vf'+i).classList.toggle('on');}
+
+let curF='Все';
+function renderFbar(){
+ const cats=['Все','Завтраки','Обеды','Ужины','Перекусы'];
+ document.getElementById('fbar').innerHTML=cats.map(c=>'<div class="fbtn '+(c==curF?'on':'')+'" onclick="curF=\''+c+'\';renderFbar();renderRec()">'+c+'</div>').join('');
 }
-
-/* ---------- РЕЦЕПТЫ ---------- */
-const R = {
-b1:{t:"Омлет с помидорами",cat:"завтрак",k:220,e:"🍳",ing:["2 яйца","50 мл молока","1 небольшой помидор","1 ч. л. оливкового масла","соль, зелень по вкусу"],
-steps:["Взбейте яйца с молоком и щепоткой соли вилкой — 1 минуту.","Помидор нарежьте кубиками (1–1,5 см).","Разогрейте масло на антипригарной сковороде на среднем огне, вылейте яичную смесь.","Готовьте под крышкой 5–7 минут на слабом огне, пока середина не схватится.","За минуту до готовности выложите помидоры на одну половину и сложите омлет пополам."],
-note:"Лёгкий белковый завтрак: сытно, но без тяжести. Подавайте с листом салата."},
-b2:{t:"Овсяная каша на молоке с яблоком",cat:"завтрак",k:280,e:"🥣",ing:["40 г овсяных хлопьев","200 мл молока 2,5%","1 яблоко","щепотка корицы"],
-steps:["Молоко доведите до кипения на среднем огне (3–4 минуты).","Всыпьте хлопья, варите на слабом огне 7–10 минут, помешивая.","Яблоко нарежьте кубиками и добавьте в кашу за 2 минуты до конца.","Снимите с огня, накройте крышкой и дайте постоять 3 минуты — каша загустеет.","Посыпьте корицей."],
-note:"Тёплая каша заряжает на первую половину дня без тяжести."},
-b3:{t:"Тост с творожным сыром и авокадо",cat:"завтрак",k:300,e:"🥑",ing:["2 ломтика белого хлеба","50 г творожного сыра","½ авокадо","лимон? нет — щепотка соли"],
-steps:["Хлеб подсушите в тостере или на сухой сковороде по 2 минуты с каждой стороны.","Авокадо разомните вилкой в пасту, посолите.","Намажьте тосты творожным сыром, сверху — авокадо.","По желанию посыпьте зеленью."],
-note:"Сытные углеводы из хлеба + полезные жиры авокадо. Порция небольшая — как раз на завтрак."},
-b4:{t:"Яичные блинчики с индейкой",cat:"завтрак",k:300,e:"🌯",ing:["3 яйца","50 г фарша индейки","1 ч. л. оливкового масла","соль"],
-steps:["Взбейте яйца венчиком до однородности (30 секунд).","На антипригарной сковороде на среднем огне испеките 2 тонких блинчика из яиц — по 2 минуты на сторону.","Отдельно обжарьте фарш 5–7 минут на среднем огне, разбивая комочки лопаткой.","Заверните фарш в блинчики.","Подавайте с огурцом."],
-note:"Больше белка — дольше сытость до обеда."},
-b5:{t:"Омлет с сыром и помидорами",cat:"завтрак",k:280,e:"🧀",ing:["2 яйца","60 мл молока","30 г сыра","1 помидор","1 ч. л. масла"],
-steps:["Взбейте яйца с молоком и солью.","На сковороде с маслом на среднем огне обжарьте помидор кубиками 3 минуты.","Вылейте яйца, готовьте под крышкой 5–6 минут на слабом огне.","Посыпьте тёртым сыром за 2 минуты до конца, сложите пополам."],
-note:"Сыр даёт вкус и сытость — но порция контролируемая."},
-b6:{t:"ПП-сэндвич с курицей",cat:"завтрак",k:320,e:"🥪",ing:["2 ломтика белого хлеба","60 г отварной курицы","20 г творожного сыра","листья салата","2 кружка помидора"],
-steps:["Хлеб подсушите 2 минуты в тостере.","Намажьте творожный сыр на оба ломтика.","На один — листья салата, курицу ломтиками и помидор.","Накройте вторым ломтиком и разрежьте по диагонали."],
-note:"Настоящий сэндвич — на лёгком белом хлебе, без майонеза."},
-b7:{t:"Каша на молоке с грушей",cat:"завтрак",k:280,e:"🍐",ing:["40 г овсяных хлопьев","200 мл молока","1 груша","щепотка ванили"],
-steps:["Вскипятите молоко (3–4 минуты).","Всыпьте хлопья, варите 7–10 минут на слабом огне.","Грушу нарежьте кубиками, добавьте за 2 минуты до готовности.","Накройте крышкой на 3 минуты."],
-note:"Мягкий завтрак для спокойного утра выходного дня."},
-l1:{t:"Гречка с курицей и салатом",cat:"обед",k:420,e:"🌾",ing:["60 г гречки (сухой)","120 г куриного филе","200 г салата: огурцы, помидоры, листья салата","1 ч. л. оливкового масла"],
-steps:["Гречку промойте, залейте водой 1:2, варите под крышкой 15 минут на слабом огне.","Куриное филе нарежьте кусочками, обжарьте на сковороде с каплей масла 8–10 минут на среднем огне, посолите.","Нарежьте овощи, заправьте маслом, перемешайте.","Соберите тарелку: гречка, курица, салат."],
-note:"Классическое пп-обед: сложные углеводы + белок."},
-l2:{t:"Творожная запеканка с салатом",cat:"обед",k:380,e:"🍮",ing:["200 г творога 5%","1 яйцо","2 ст. л. манки? нет — рисовой муки или 2 ст. л. кукурузной муки","2 ст. л. молока","салат из огурцов и помидоров"],
-steps:["Творог разомните вилкой, добавьте яйцо, муку и молоко, перемешайте до однородности.","Выложите в форму, смазанную маслом.","Запекайте при 180°C 30–35 минут до золотистого верха.","Дайте остыть 10 минут — запеканка схватится.","Подавайте с овощным салатом."],
-note:"Белковый обед без тяжести. Готовится на 2 приёма — вторая половина на завтра."},
-l3:{t:"Рис с индейкой и овощным салатом",cat:"обед",k:430,e:"🍛",ing:["60 г риса (сухого)","130 г филе индейки","200 г салата из огурцов и помидоров","1 ч. л. масла","чеснок — 1 зубчик"],
-steps:["Рис промойте, варите в подсоленной воде 15 минут под крышкой.","Индейку нарежьте полосками, обжарьте с рубленым чесноком 8 минут на среднем огне.","Нарежьте салат, заправьте маслом.","Подайте рис с индейкой и салатом рядом."],
-note:"Чеснок даёт вкус без острых приправ."},
-l4:{t:"Булгур с курицей и овощами",cat:"обед",k:420,e:"🥘",ing:["60 г булгура (сухого)","120 г куриного филе","кабачок 100 г","морковь 60 г","1 ч. л. масла"],
-steps:["Булгур залейте кипятком 1:2, накройте крышкой на 15 минут — впитает воду сам.","Курицу и овощи нарежьте кубиками.","Обжарьте на среднем огне 10 минут, помешивая, посолите.","Смешайте с булгуром."],
-note:"Булгур не разваривается — рассыпчатый гарнир."},
-l5:{t:"Пюре с запечённой курицей",cat:"обед",k:430,e:"🍗",ing:["200 г картофеля","120 г куриного филе","50 мл молока","1 ч. л. масла","листья салата"],
-steps:["Картофель отварите 20 минут — проверьте ножом: входит легко.","Курицу посолите, заверните в фольгу, запекайте при 200°C 25 минут.","Слейте воду с картофеля, разомните с тёплым молоком и маслом.","Подайте с листьями салата."],
-note:"Домашнее пюре без сливок — лёгкое, но сытное."},
-l6:{t:"Гречка с индейкой и салатом",cat:"обед",k:420,e:"🥗",ing:["60 г гречки","130 г филе индейки","салат из огурцов, помидоров и листьев","1 ч. л. масла"],
-steps:["Гречку варите 15 минут в воде 1:2.","Индейку нарежьте кубиками, обжарьте 8–10 минут, посолите.","Салат нарежьте, заправьте маслом.","Соберите тарелку."],
-note:"Индейка — постное мясо, идеально для дефицита."},
-l7:{t:"Булгур с курицей и салатом",cat:"обед",k:430,e:"🌿",ing:["60 г булгура","120 г куриного филе","салат: листья, помидоры, огурцы","1 ч. л. масла"],
-steps:["Булгур залейте кипятком 1:2 на 15 минут.","Курицу обжарьте 8–10 минут на среднем огне.","Салат нарежьте и заправьте.","Подайте вместе."],
-note:"Воскресный обед — простой и быстрый."},
-s1:{t:"Хлебцы с творожным сыром и огурцом",cat:"перекус",k:190,e:"🥒",ing:["2 хлебца","40 г творожного сыра","½ огурца"],
-steps:["Намажьте хлебцы творожным сыром.","Огурец нарежьте тонкими кружками и выложите сверху.","Ешьте сразу — иначе хлебцы размокнут."],
-note:"Аналог сэндвича, но в 2 раза легче: хлебцы без дрожжей и без вздутия."},
-s2:{t:"Роллы из листьев салата с курицей",cat:"перекус",k:180,e:"🥬",ing:["5–6 листьев салата","80 г отварной курицы","20 г творожного сыра","огурец"],
-steps:["Курицу и огурец нарежьте мелкой соломкой.","Смешайте с творожным сыром.","Выложите начинку на лист салата и сверните роллом.","Скрепите зубочисткой при желании."],
-note:"Вместо лаваша — листья салата: ноль тяжести для живота."},
-s3:{t:"Ряженка с персиком",cat:"перекус",k:180,e:"🍑",ing:["200 мл ряженки","1 персик"],
-steps:["Персик нарежьте кубиками.","Залейте ряженкой или ешьте поочерёдно.","Охладите — так вкуснее."],
-note:"Сладость персика вместо сахара — некисло и нежно."},
-s4:{t:"Огуречные сэндвичи",cat:"перекус",k:140,e:"🥒",ing:["1 крупный огурец","40 г творожного сыра","1 зубчик чеснока"],
-steps:["Огурец нарежьте кружками по 1 см.","Смешайте творожный сыр с давленым чесноком.","Намажьте крем на кружки и сложите попарно — как сэндвичи."],
-note:"Хрустящая замена бутерброда — 140 ккал на 6–8 штук."},
-s5:{t:"Лаваш-ролл с красной рыбой",cat:"перекус",k:220,e:"🍣",ing:["½ тонкого лаваша","50 г красной рыбы без костей","30 г творожного сыра","огурец"],
-steps:["Намажьте лаваш творожным сыром.","Выложите рыбу тонкими ломтиками и полоски огурца.","Сверните плотным роллом и разрежьте на 3 части."],
-note:"Лаваш тонкий и бездрожжевой — лёгкая «обёртка» вместо булки."},
-s6:{t:"Нори-роллы с лососем",cat:"перекус",k:200,e:"🍙",ing:["1 лист нори","60 г отварного риса","40 г красной рыбы без костей","огурец"],
-steps:["Сварите рис заранее (15 минут) и остудите.","Выложите рис на половину листа нори тонким слоем.","На рис — полоски рыбы и огурца.","Сверните рулетом, разрежьте на 6 роллов влажным ножом."],
-note:"Эффект суши без теста и без соевого маринада с сахаром."},
-s7:{t:"Хлебцы с творожным сыром и помидором",cat:"перекус",k:170,e:"🍅",ing:["2 хлебца","40 г творожного сыра","1 помидор","щепотка соли"],
-steps:["Намажьте хлебцы сыром.","Помидор нарежьте кружками, выложите сверху.","Слегка посолите."],
-note:"Лёгкий вечерний перекус, если до ужина далеко."},
-d1:{t:"Томатный суп с фрикадельками из индейки",cat:"ужин",k:350,e:"🍲",ing:["300 г фарша индейки","1 луковица","2 помидора или 200 мл томатного пюре","1 картофелина","морковь 60 г","1 л воды"],
-steps:["Смешайте фарш с тёртым луком и солью, слепите фрикадельки размером с грецкий орех.","Доведите воду до кипения, опустите фрикадельки, варите 10 минут, снимая пену.","Добавьте нарезанные картофель и морковь, варите 10 минут.","Добавьте томатное пюре или нарезанные помидоры, варите ещё 7–10 минут.","Проверьте картошку ножом; посолите по вкусу."],
-note:"Томатная база — не кислая при варке, уксус не нужен."},
-d2:{t:"Кабачки с фаршем индейки в духовке",cat:"ужин",k:380,e:"🧆",ing:["2 кабачка","300 г фарша индейки","1 луковица","2 ст. л. сметаны 10%","50 г сыра"],
-steps:["Кабачки разрежьте вдоль, ложкой выньте серединку — получатся «лодочки».","Фарш смешайте с тёртым луком, посолите.","Наполните лодочки фаршем, смажьте сметаной.","Посыпьте тёртым сыром, запекайте при 190°C 30–35 минут.","Готово, когда кабачок мягкий (проверьте ножом)."],
-note:"По мотивам пп-рецептов: сочно за счёт кабачка, сытно за счёт фарша."},
-d3:{t:"Куриный суп с рисом",cat:"ужин",k:340,e:"🍜",ing:["150 г куриного филе","2 ст. л. риса","1 картофелина","морковь 60 г","1 л воды"],
-steps:["Доведите воду до кипения, опустите курицу целиком, варите 15 минут, снимая пену.","Достаньте курицу, нарежьте; в бульон добавьте нарезанные картофель и морковь.","Варите 10 минут, всыпьте рис.","Через 10 минут верните курицу в суп.","Посолите и выключите."],
-note:"Без зажарки — прозрачный лёгкий суп."},
-d4:{t:"Хек в духовке с помидорами",cat:"ужин",k:350,e:"🐟",ing:["2 филе хека (без костей)","2 помидора","½ луковицы","1 ч. л. масла","зелень"],
-steps:["Филе посолите, выложите в форму, смазанную маслом.","Лук нарежьте полукольцами, помидоры — кружками.","Выложите лук и помидоры на рыбу.","Запекайте при 190°C 25–30 минут.","Посыпьте зеленью перед подачей."],
-note:"Хек дешевле трески и всегда без костей — только филе."},
-d5:{t:"Помидоры с фаршем и сыром",cat:"ужин",k:360,e:"🍅",ing:["4 средних помидора","250 г фарша индейки","40 г сыра","½ луковицы"],
-steps:["Срежьте у помидоров верхушки, ложкой выньте мякоть (используйте её в суп или соус).","Фарш смешайте с тёртым луком и солью.","Наполните помидоры фаршем.","Посыпьте сыром, запекайте при 190°C 25 минут."],
-note:"Помидор остаётся сочным и заменяет гарнир."},
-d6:{t:"Курица с овощами в фольге",cat:"ужин",k:370,e:"📦",ing:["150 г куриного филе","кабачок 100 г","морковь 60 г","½ луковицы","1 ч. л. масла"],
-steps:["Филе и овощи нарежьте крупными кусками.","Выложите на фольгу, посолите, сбрызните маслом.","Заверните конвертом, оставив внутри воздух.","Запекайте при 200°C 30 минут.","Осторожно откройте — пар горячий!"],
-note:"Готовится в собственном соку — без масла и поджарок."},
-d7:{t:"Минтай с кабачками и морковью в фольге",cat:"ужин",k:330,e:"🐠",ing:["2 филе минтая (без костей)","кабачок 100 г","морковь 60 г","1 ч. л. масла","лимон? нет — зелень"],
-steps:["Филе посолите.","Овощи нарежьте кружками, выложите на фольгу первым слоем.","Сверху — рыбу, сбрызните маслом.","Заверните и запекайте при 200°C 25–30 минут."],
-note:"Бюджетная рыба, которую вы едите: только филе, без костей."}
-};
-
-const WEEK = [
-  {d:"Понедельник",m:["b1","l1","s1","d1"]},
-  {d:"Вторник",m:["b2","l2","s2","d2"]},
-  {d:"Среда",m:["b3","l3","s3","d3"]},
-  {d:"Четверг",m:["b4","l4","s4","d4"]},
-  {d:"Пятница",m:["b5","l5","s5","d5"]},
-  {d:"Суббота",m:["b6","l6","s6","d6"]},
-  {d:"Воскресенье",m:["b7","l7","s7","d7"]}
-];
-const MEALS=[["завтрак","☀️"],["обед","🍽️"],["перекус","🍎"],["ужин","🌙"]];
-
-function renderFood(){
-  document.getElementById("foodweek").innerHTML = WEEK.map(w=>{
-    const tot = w.m.reduce((s,id)=>s+R[id].k,0);
-    return `<div class="card daycard"><h3>${w.d}<span class="kcal">${tot} ккал</span></h3>`+
-      w.m.map((id,i)=>`<div class="meal" onclick="openRecipe('${id}')"><div class="mi"><b>${MEALS[i][1]} ${R[id].t}</b><span>${MEALS[i][0]}</span></div><div class="mk">${R[id].k} ккал</div></div>`).join("")+
-      `</div>`;
-  }).join("");
+function renderRec(){
+ let h='';
+ RECIPES.filter(r=>curF=='Все'||r.c==curF).forEach(r=>{
+  h+='<div class="card rec"><b>'+r.t+'</b> <span class="kcal">· '+r.kcal+' ккал</span><div class="ing">🛒 '+r.ing+'</div><ol class="steps">'+r.steps.map(s=>'<li>'+s+'</li>').join('')+'</ol></div>';
+ });
+ document.getElementById('reclist').innerHTML=h;
 }
 
-const CATS=["все","завтрак","обед","ужин","перекус"];
-let curCat="все";
-function renderRecipes(){
-  document.getElementById("rfilters").innerHTML=CATS.map(c=>`<button class="fbtn ${c===curCat?'on':''}" onclick="setCat('${c}')">${c}</button>`).join("");
-  document.getElementById("rgrid").innerHTML=Object.entries(R).filter(([id,r])=>curCat==="все"||r.cat===curCat)
-    .map(([id,r])=>`<div class="rcard" onclick="openRecipe('${id}')"><div class="em">${r.e}</div><b>${r.t}</b><span>${r.k} ккал · ${r.cat}</span></div>`).join("");
-}
-function setCat(c){curCat=c;renderRecipes();}
-
-function openRecipe(id){
-  const r=R[id];
-  document.getElementById("sheet").innerHTML=`<button class="close" onclick="closeModal()">✕</button>
-    <h2>${r.e} ${r.t}</h2><span class="chip">${r.k} ккал</span><span class="chip g">${r.cat}</span>
-    <div class="sec-title" style="font-size:15px;margin-top:14px">Ингредиенты</div>
-    <ul class="ing">${r.ing.map(i=>`<li>${i}</li>`).join("")}</ul>
-    <div class="sec-title" style="font-size:15px;margin-top:14px">Приготовление</div>
-    ${r.steps.map((s,i)=>`<div class="step"><b>Шаг ${i+1}.</b> ${s}</div>`).join("")}
-    ${r.note?`<div class="note">💡 ${r.note}</div>`:""}`;
-  document.getElementById("modal").classList.add("open");
-}
-function closeModal(){document.getElementById("modal").classList.remove("open");}
-
-/* ---------- ДНЕВНИК ---------- */
-const NORM=1400;
-const PRACTICES=["💪 Основная практика","🧘 Комплекс на спину","🌙 Вечерняя растяжка"];
-function LS(){try{return JSON.parse(localStorage.getItem("zt_data")||"{}")}catch(e){return {}}}
-function saveLS(d){localStorage.setItem("zt_data",JSON.stringify(d))}
-let viewMonth=new Date();viewMonth.setDate(1);
-
+function pracForDow(dow){return SCHED[dow]||[]}
 function renderDiary(){
-  const d=LS();
-  const inp=document.getElementById("startDate");
-  inp.value=d.start||"";
-  inp.onchange=()=>{const dd=LS();dd.start=inp.value;saveLS(dd);renderDiary();};
-  let days=0;
-  if(d.start){const s=new Date(d.start),n=new Date();days=Math.floor((n.setHours(0,0,0,0)-s.getTime())/(86400000))+1;}
-  document.getElementById("daysCount").textContent=days>0?days:"—";
-  // календарь
-  const y=viewMonth.getFullYear(),m=viewMonth.getMonth();
-  document.getElementById("calLabel").textContent=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][m]+" "+y;
-  const first=new Date(y,m,1),start=(first.getDay()+6)%7,dim=new Date(y,m+1,0).getDate();
-  let h=["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(x=>`<div class="dow">${x}</div>`).join("");
-  for(let i=0;i<start;i++)h+="<div></div>";
-  const today=new Date();today.setHours(0,0,0,0);
-  for(let dd=1;dd<=dim;dd++){
-    const date=new Date(y,m,dd),key=date.toISOString().slice(0,10),rec=d.days&&d.days[key];
-    let kcal=0; if(rec&&rec.food){kcal=Object.entries(rec.food).filter(([,v])=>v).reduce((s,[k])=>s+(R[k]?R[k].k:0),0);}
-    const cls=(rec&&rec.food&&Object.values(rec.food).some(v=>v)?"eaten":"")+(date.getTime()===today.getTime()?" today":"");
-    h+=`<div class="cday ${cls}" onclick="openDay('${key}')">${dd}${kcal?`<small>${kcal}</small>`:""}</div>`;
-  }
-  document.getElementById("calGrid").innerHTML=h;
-  // деталь дня, если открыт
-  if(d.openDay){const has=document.getElementById("dayDetail");if(has)fillDay(d.openDay);}
+ document.getElementById('startDate').value=S.start||'';
+ let days=0,pracAll=0,pracWeek=0;
+ if(S.start){const a=new Date(S.start+'T00:00:00');days=Math.max(0,Math.floor((new Date()-a)/864e5));}
+ for(const pk in S.prac){if(Object.values(S.prac[pk]).some(x=>x))pracAll++;}
+ const now=new Date();
+ for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);const pk=keyOf(d);const v=S.prac[pk];if(v&&Object.values(v).some(x=>x))pracWeek++;}
+ document.getElementById('stDays').textContent=days;
+ document.getElementById('stPrac').textContent=pracAll;
+ document.getElementById('stWeek').textContent=pracWeek;
+ const y=now.getFullYear(),m=now.getMonth();
+ const first=new Date(y,m,1);const startCol=(first.getDay()+6)%7;
+ const dim=new Date(y,m+1,0).getDate();
+ let h='';
+ for(let i=0;i<startCol;i++)h+='<div></div>';
+ for(let d=1;d<=dim;d++){
+  const dt=new Date(y,m,d),k=keyOf(dt);
+  const v=S.prac[k];let dot='';
+  if(v){const done=Object.values(v).filter(x=>x).length;dot=done>=3?'done':(done>0?'part':'');}
+  h+='<div class="cel '+(k==todayKey()?'today':'')+'"><span>'+d+'</span><span class="dot '+dot+'"></span></div>';
+ }
+ document.getElementById('cal').innerHTML=h;
+ const tk=todayKey();const dow=String((new Date().getDay()+6)%7);
+ document.getElementById('dTitle').textContent='Сегодня · '+DOW[dow];
+ const mi=MENU.findIndex(x=>x.d==DOW[dow]);
+ let mh='',mt=0;
+ if(mi>=0){const day=MENU[mi];
+  day.items.forEach((it,ii)=>{
+   const k=day.d+'_'+ii,on=!!S.food[k];if(on)mt+=it[2];
+   mh+='<div class="mealrow"><div class="info"><b>'+it[1]+'</b><span class="tag">'+it[0]+' · '+it[2]+' ккал</span></div><div class="chkbx '+(on?'on':'')+'" onclick="toggleFood(\''+k+'\')">'+(on?'✓':'')+'</div></div>';
+  });
+ }
+ document.getElementById('dMeals').innerHTML=mh||'<p class="note">Питайтеся по своему усмотрению.</p>';
+ document.getElementById('dKcal').textContent='Отмечено: '+mt+' ккал из плана';
+ const plist=['Основная практика','Спина','Растяжка'];
+ let ph='';
+ plist.forEach((name,pi)=>{
+  const on=!!(S.prac[tk]&&S.prac[tk][pi]);
+  ph+='<div class="mealrow"><div class="info"><b>'+name+'</b><span class="tag">'+(pracForDow(dow)[pi]||'')+'</span></div><div class="chkbx '+(on?'on':'')+'" onclick="togglePrac(\''+tk+'\','+pi+')">'+(on?'✓':'')+'</div></div>';
+ });
+ document.getElementById('dPrac').innerHTML=ph;
 }
-function calMove(n){viewMonth.setMonth(viewMonth.getMonth()+n);renderDiary();}
-function openDay(key){
-  const d=LS();d.openDay=key;saveLS(d);
-  document.getElementById("dayDetail").style.display="block";
-  fillDay(key);
-}
-function fillDay(key){
-  const d=LS(),rec=(d.days&&d.days[key])||{food:{},pr:{}};
-  const dt=new Date(key);
-  document.getElementById("dayDetailTitle").textContent="День: "+dt.toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"});
-  let tot=0;
-  document.getElementById("dishList").innerHTML=WEEK.flatMap(w=>w.m.map(id=>({id,c:w.d}))).length?Object.keys(R).map(id=>{
-    const on=!!(rec.food&&rec.food[id]);if(on)tot+=R[id].k;
-    return `<div class="dishline"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" ${on?"checked":""} onchange="toggleDish('${key}','${id}',this.checked)"> ${R[id].e} ${R[id].t}</label><span style="color:var(--purple);font-weight:600">${R[id].k}</span></div>`;
-  }).join(""):"";
-  const pct=Math.min(100,Math.round(tot/NORM*100));
-  document.getElementById("dayKcalLabel").textContent=`Съедено: ${tot} ккал из ~${NORM}`;
-  document.getElementById("dayBar").style.width=pct+"%";
-  document.getElementById("prList").innerHTML=PRACTICES.map((p,i)=>{
-    const on=!!(rec.pr&&rec.pr[i]);
-    return `<div class="dishline"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" ${on?"checked":""} onchange="togglePr('${key}',${i},this.checked)"> ${p}</label></div>`;
-  }).join("");
-}
-function toggleDish(key,id,on){const d=LS();d.days=d.days||{};d.days[key]=d.days[key]||{food:{},pr:{}};d.days[key].food=d.days[key].food||{};d.days[key].food[id]=on;saveLS(d);fillDay(key);renderDiary();}
-function togglePr(key,i,on){const d=LS();d.days=d.days||{};d.days[key]=d.days[key]||{food:{},pr:{}};d.days[key].pr=d.days[key].pr||{};d.days[key].pr[i]=on;saveLS(d);fillDay(key);renderDiary();}
+function togglePrac(tk,pi){S.prac[tk]=S.prac[tk]||{};S.prac[tk][pi]=!S.prac[tk][pi];if(!S.prac[tk][pi])delete S.prac[tk][pi];sv();renderDiary();}
+function saveStart(){S.start=document.getElementById('startDate').value||null;sv();renderDiary();}
 
-/* ---------- ВКЛАДКИ ---------- */
-document.querySelectorAll("nav button").forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
-    document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
-    b.classList.add("on");
-    document.getElementById("tab-"+b.dataset.tab).classList.add("active");
-  };
-});
+function doBackup(){
+ const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='zentarelka-backup-'+todayKey()+'.json';a.click();
+ S.lastbk=todayKey();sv();document.getElementById('lastbk').textContent='Последний бэкап: '+todayKey();
+}
+function doRestore(inp){
+ const f=inp.files[0];if(!f)return;
+ if(!confirm('Восстановить данные из файла? Текущие отметки будут заменены.'))return;
+ const r=new FileReader();
+ r.onload=e=>{try{const d=JSON.parse(e.target.result);if(!d||typeof d!=='object'||!('food' in d))throw 0;S=d;S.prac=S.prac||{};S.food=S.food||{};sv();renderAll();alert('Данные восстановлены!');}catch(err){alert('Не удалось прочитать файл. Убедитесь, что это файл, скачанный из этого приложения.');}};
+ r.readAsText(f);
+}
 
-renderYoga();renderFood();renderRecipes();renderDiary();
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('on'));
+ t.classList.add('on');document.getElementById('sec-'+t.dataset.s).classList.add('on');
+ window.scrollTo(0,0);
+}));
+function renderAll(){renderMenu();renderYoga();renderFbar();renderRec();renderDiary();
+ if(S.lastbk)document.getElementById('lastbk').textContent='Последний бэкап: '+S.lastbk;}
+renderAll();
 </script>
 </body>
 </html>
